@@ -1,4 +1,4 @@
-
+/* 
 //Pre entrega 2 
 
 function inicio() {
@@ -85,6 +85,9 @@ function verSoloPrecio(){
 }
 
 
+console.log(document)
+
+
 if (opcion == 2) {
     verSoloPrecio();
 }
@@ -110,7 +113,6 @@ if (opcion == 3) {
     elegirCerveza();
 }
 
-
 //Opcion 4
 if (opcion == 4 ){
 do {
@@ -118,18 +120,140 @@ do {
 } while (opcion =! 4);} 
 }
 
-
-
-
 menu();
 
+ */
+
+const productos = [
+  /* cervezas */
+  {
+    categoria: "cerveza",
+    id: "cervezaWarsteiner",
+    titulo: "Warsteiner",
+    imagen: "./img/warsteiner.jpg",
+    precio: 700
+  },
+  {
+    categoria: "cerveza",
+    id: "cervezaSchneider",
+    titulo: "Schneider",
+    imagen: "./img/schneider.jpg",
+    precio: 800
+  },
+  {
+    categoria: "cerveza",
+    id: "cervezaAmstel",
+    titulo: "Amstel",
+    imagen: "./img/amstel.jpg",
+    precio: 750
+  },
+  {
+    categoria: "cerveza",
+    id: "cervezaHeineken",
+    titulo: "Heineken",
+    imagen: "./img/heineken.jpg",
+    precio: 900
+  },
+  {
+    categoria: "cerveza",
+    id: "cervezaImperial",
+    titulo: "Imperial",
+    imagen: "./img/imperial.jpg",
+    precio: 700
+  },
+  {
+    categoria: "cerveza",
+    id: "cervezaMiller",
+    titulo: "Miller",
+    imagen: "./img/miller.jpg",
+    precio: 800
+  },
+  {
+    categoria: "cerveza",
+    id: "cervezaQuilmes",
+    titulo: "Quilmes",
+    imagen: "./img/quilmes.jpg",
+    precio: 900
+  },
+  {
+    categoria: "cerveza",
+    id: "cervezaGrolsh",
+    titulo: "Grolsh",
+    imagen: "./img/groshl.jpg",
+    precio: 850
+  }
+];
+
+const contenedorProductos = document.querySelector("#contenedor-productos");
+const botonesCategorias = document.querySelectorAll(".boton-categoria");
+const tituloPrincipal = document.querySelector("#titulo-principal");
+let botonesAgregar = document.querySelectorAll(".producto-agregar")
 
 
 
+function cargarProductos(productosElegidos) {
+
+  contenedorProductos.innerHTML = "";
+
+  productosElegidos.forEach(producto => {
+
+    const div = document.createElement("div"); 
+    div.classList.add("producto");
+    div.innerHTML = `
+        <img class="producto-imagen" src="${producto.imagen}"jpg" alt="${producto.titulo}">
+        <div class="producto-detalles">
+          <h3 class="producto-titulo">${producto.titulo}</h3>
+          <p class="producto-precio">${producto.precio}</p>
+          <button class="producto-agregar id="${producto.id}">Agregar</button>
+        </div>
+      </div>
+  `;
+  contenedorProductos.append(div);
+  })
+  actualizarBotonesAgregar();
+}
+
+cargarProductos(productos);
+
+botonesCategorias.forEach(boton => {
+
+  boton.addEventListener("click", (e) => {
+
+    botonesCategorias.forEach(boton => boton.classList.remove("active"));
+    
+    e.currentTarget.classList.add("active");
 
 
+    if (e.currentTarget.id != "todos"){
+
+      const productoCategoria = productos.find(productos => producto.categoria.id === e.currentTarget.id);
+      tituloPrincipal.innerText = productoCategoria.categoria.nombre;
+
+      /* Corregir */
+      const productosBoton = productos.filter(producto => producto.categoria.id === e.currentTarget.id);
+  
+      cargarProductos(productosBoton);
+    } else {
+      tituloPrincipal.innerText = "Todos los productos";
+      cargarProductos(productos);
+    }
+
+  })
+
+})
 
 
+function actualizarBotonesAgregar() {
+  botonesAgregar = document.querySelectorAll(".producto-agregar");
+  botonesAgregar.forEach(boton => {
+    addEventListener("click", agregarAlCarrito);
+  })
+};
 
+const productosEnCarrito = [];
 
-
+function agregarAlCarrito(e) {
+  const idBoton = e.currentTarget.id
+  
+  const productoAgregado = productos.find( producto => producto.id === idBoton);
+}
